@@ -1,0 +1,155 @@
+input:-webkit-autofill {
+  transition: background-color 50000s ease-in-out 0s;
+}
+
+.login-container {
+  width: 100%;
+  min-width: 1200px;
+  height: 100vh;
+  min-height: 600px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.login-header {
+  width: 1200px;
+  height: 90px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  .logo {
+    display: block;
+    width: 50px;
+    height: auto;
+  }
+  .name {
+    font-size: 24px;
+    color: #171717;
+    font-weight: bold;
+    margin-left: 13px;
+  }
+  .slogan {
+    font-size: 22px;
+    color: #0055b7;
+    margin-left: auto;
+  }
+}
+
+.login-content {
+  flex: 1 1 auto;
+  background-color: #eaeaef;
+  background-size: cover;
+  position: relative;
+  display: flex;
+}
+
+.login-center {
+  width: 1200px;
+  min-height: 650px;
+  position: relative;
+  margin: 0 auto;
+  display: flex;
+  .name {
+    font-size: 38px;
+    color: #fff;
+    text-shadow: 0px 2px 2px rgba(0, 62, 116, 0.59);
+    position: absolute;
+    top: 240px;
+    left: 100%;
+    margin-left: -390px - 40px - 620px;
+  }
+}
+
+.login-wrap {
+  width: 390px;
+  height: 450px;
+  padding: 30px 35px 0 35px;
+  background-color: #fff;
+  border-radius: 4px;
+  position: absolute;
+  top: 196px;
+  left: 100%;
+  margin-left: -390px - 40px;
+
+  .title {
+    font-size: 30px;
+    color: #1a1a1a;
+    line-height: 40px;
+    padding-bottom: 18px;
+    position: relative;
+    // &::before {
+    //   content: '';
+    //   display: block;
+    //   width: 30px;
+    //   height: 3px;
+    //   background-color: #277DC3;
+    //   position: absolute;
+    //   left: 0;
+    //   bottom: 0;
+    // }
+  }
+}
+
+.login-form.ant-form-horizontal ::ng-deep {
+  .ant-form-item {
+    margin-bottom: 20px;
+  }
+  .ant-input-affix-wrapper {
+    font-size: 16px;
+    color: #666;
+    padding: 0;
+    border: 0;
+    border-bottom: 2px solid #eaeaef;
+  }
+  .ant-input-prefix {
+    color: #666;
+    width: 70px;
+    margin-right: 0;
+  }
+  .ant-input {
+    font-size: 16px;
+    color: #666;
+    padding: 12px 0;
+  }
+  .ant-form-item-control {
+    position: relative;
+  }
+  .ant-form-item-explain.ant-form-item-explain-error {
+    position: absolute;
+    left: 70px;
+    bottom: -26px;
+  }
+  .submit-btn {
+    font-size: 20px;
+    height: 50px;
+    margin-top: 30px;
+    background-color: #1975d1;
+    border-color: #1890ff;
+  }
+}
+
+.qrCodeWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.refressBtn {
+  display: inline-block;
+  position: absolute;
+  right: 38px;
+  top: 100px;
+  z-index: 10000;
+}
+
+::ng-deep.notification-gray {
+  background: rgba(0, 0, 0, 0.7);
+  margin-top: 50px;
+  .ant-notification-notice-message {
+    color: #fff;
+  }
+  .ant-notification-notice-close {
+    color: #fff;
+  }
+}

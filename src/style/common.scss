@@ -1,0 +1,310 @@
+@use "variables";
+
+@use "mixin.scss";
+// 单行省略号
+.ellipsis {
+  @include mixin.rowOne;
+}
+
+// 列表的搜索
+.tool-bar {
+  display: flex;
+  margin-bottom: 20px;
+
+  .filter {
+    display: flex;
+    flex-wrap: wrap;
+    .w120 {
+      width: 120px;
+    }
+
+    .w150 {
+      width: 150px;
+    }
+
+    .w200 {
+      width: 200px;
+    }
+
+    .w250 {
+      width: 250px;
+    }
+
+    .w300 {
+      width: 300px;
+    }
+
+    .margin-r-10 {
+      margin-right: 10px;
+    }
+
+    .margin-b-10 {
+      margin-bottom: 10px;
+    }
+    .f-select {
+      .ant-select:not(.ant-select-customize-input),
+      .ant-select-selector {
+        transition: none;
+      }
+    }
+  }
+  .operate {
+    margin-left: auto;
+    .o-btn {
+      margin-left: 10px;
+    }
+  }
+  .add-btn {
+    margin-left: auto;
+  }
+}
+
+// 删除提示的气泡确认框
+::ng-deep.delete-popover {
+  .ant-popover-inner-content {
+    width: 220px;
+  }
+}
+
+// 抽屉详情
+::ng-deep.info-drawer {
+  .ant-drawer-body {
+    padding: 20px 30px;
+  }
+
+  .ant-drawer-footer {
+    .ant-btn + .ant-btn {
+      margin-left: 10px;
+    }
+  }
+}
+
+.info-wrap {
+  margin-bottom: 10px;
+
+  .title {
+    display: flex;
+    line-height: 24px;
+    margin-bottom: 10px;
+
+    .txt {
+      font-size: 16px;
+      color: #333;
+      padding-left: 9px;
+      position: relative;
+
+      &::before {
+        content: "";
+        display: block;
+        width: 3px;
+        height: 14px;
+        background-color: variables.$primary-color;
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translate(0, -50%);
+      }
+    }
+
+    .add {
+      margin-left: auto;
+    }
+  }
+}
+
+.info-list-wc {
+  margin: 0 9px;
+  overflow: hidden;
+}
+
+.info-list {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 4px 0;
+  margin-right: -30px;
+  font-size: 14px;
+  color: #333;
+  line-height: 24px;
+
+  .item {
+    flex: 1 1 50%;
+    margin-bottom: 10px;
+
+    &.item-whole {
+      flex: 1 1 100%;
+    }
+  }
+
+  .col {
+    margin-right: 30px;
+    display: flex;
+
+    .lab {
+      flex: 0 0 80px;
+      text-align: right;
+    }
+
+    .char {
+      flex: 1 1 auto;
+      color: #333;
+      overflow: hidden;
+      margin-left: 4px;
+    }
+    .rich-text ::ng-deep {
+      p {
+        margin-bottom: 0;
+      }
+      img {
+        max-width: 100%;
+        height: auto;
+      }
+    }
+  }
+
+  .info-tag-list {
+    margin-bottom: -8px;
+
+    ::ng-deep .ant-tag {
+      margin-bottom: 8px;
+    }
+  }
+}
+
+// 上传组件nzListType="picture"的样式【纯展示列表】
+.info-upload ::ng-deep {
+  .ant-upload-list-picture-container:first-child {
+    .ant-upload-list-item {
+      margin-top: 0;
+    }
+  }
+
+  .ant-upload-list-picture .ant-upload-list-item-name {
+    max-width: 373px;
+  }
+}
+
+.info-upload-name533 ::ng-deep {
+  .ant-upload-list-picture .ant-upload-list-item-name {
+    max-width: 533px;
+  }
+}
+
+// 上传组件nzListType="picture"的样式【有上传】
+::ng-deep .ant-upload-list-picture .ant-upload-list-item-progress {
+  display: none;
+}
+
+// 上传组件nzListType="picture-card"的样式
+.picture-card-button {
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  background-color: transparent;
+}
+
+.annex-picture-card-list {
+  display: flex;
+  flex-wrap: wrap;
+
+  .apc-item {
+    flex: 0 0 auto;
+    width: 50px;
+    height: 50px;
+    margin-bottom: 8px;
+    margin-right: 8px;
+
+    .view-img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+      object-fit: cover;
+    }
+  }
+}
+
+.alert-plus {
+  font-size: 16px;
+  color: #52c41a;
+  font-weight: bold;
+  padding-right: 4px;
+}
+
+.reduce-plus {
+  font-size: 16px;
+  color: #f5222d;
+  font-weight: bold;
+  padding-right: 4px;
+}
+
+// 表格
+.table-icon-view {
+  cursor: pointer;
+}
+.table-tool-tip {
+  display: flex;
+
+  .tool-tip {
+    @include mixin.rowOne;
+  }
+  // 可点击查看详情
+  &.clickable {
+    .tool-tip {
+      color: variables.$primary-color;
+      cursor: pointer;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+  // 可点击预览
+  &.view {
+    .tool-tip {
+      cursor: pointer;
+      &:hover {
+        color: variables.$primary-color;
+      }
+    }
+  }
+}
+
+.table-tag-list {
+  margin-bottom: -8px;
+
+  ::ng-deep .ant-tag {
+    margin-bottom: 8px;
+  }
+}
+
+// 问题咨询发送弹窗
+::ng-deep .message-send-modal {
+  .ant-modal-content {
+    background-color: transparent;
+    box-shadow: none;
+  }
+}
+
+.flex_center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex_between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+// 抽屉详情拒绝理由
+.reject-box {
+  margin-top: 10px;
+  .img {
+    width: 80px;
+    height: 80px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+  }
+}

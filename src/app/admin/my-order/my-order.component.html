@@ -1,0 +1,157 @@
+<div class="tool-bar">
+    <div class="filter">
+      <nz-select [(ngModel)]="search.status" 
+                 class="f-select w200 margin-r-10" 
+                 nzAllowClear 
+                 nzPlaceHolder="预订状态"
+                (ngModelChange)="searchChange()">
+           <nz-option *ngFor="let item of status;" 
+                      [nzValue]="item._id" 
+                      [nzLabel]="item.name">
+            </nz-option>
+      </nz-select>
+    </div>
+    <button class="add-btn" nz-button nzType="primary" (click)="aeClick()">
+        <i nz-icon nzType="plus" nzTheme="outline"></i>添加预订
+    </button>
+</div>
+
+<!-- 列表 -->
+<nz-table #basicTable 
+          [nzScroll]="{ x: '1330px' }"
+          nzTableLayout="fixed" 
+          [nzFrontPagination]="false" 
+          [nzHideOnSinglePage]="true" 
+          [nzData]="list"
+          >
+    <thead>
+        <tr>
+            <th nzLeft nzWidth="160px">姓名</th>
+            <th nzWidth="160px">联系方式</th>
+            <th nzWidth="160px">预计到达时间</th>
+            <th nzWidth="120px">预订状态</th>
+            <th nzWidth="160px">提交时间</th>
+            <th nzWidth="160px" nzRight>操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let data of basicTable.data;let i = index;">
+          <td nzLeft>
+              {{ data.name }}
+          <td>{{ data.mobile }}</td>
+          <td>{{ data.eta | datetime:'YYYY-MM-DD'}}</td>
+          <td>{{ data.status | orderStatus }}</td>
+          <td>{{ data.time | datetime }}</td>
+          <td nzRight>
+            <a (click)="infoClick(data)">详情</a>
+            <nz-divider *ngIf="data.status!=-1" nzType="vertical"></nz-divider>
+            <a *ngIf="data.status!=-1" (click)="aeClick(data)">编辑</a><nz-divider nzType="vertical"></nz-divider>
+            <a *ngIf="data.status!=-1" nz-popconfirm
+               nzPopconfirmOverlayClassName="delete-popover"
+               nzPopconfirmPlacement="bottomRight"
+               nzPopconfirmTitle="确认取消预定吗?"
+               (nzOnConfirm)="fetchRemove(data._id)">
+               取消预定
+            </a>
+          </td>
+        </tr>
+    </tbody>
+</nz-table>
+
+<!-- 详情 -->
+<nz-drawer nzWrapClassName="info-drawer"
+           [nzVisible]="infoDrawer.visible"
+           [nzTitle]="infoDrawer.title"
+           [nzClosable]="true"
+           [nzWidth]="500"
+           [nzKeyboard]="false"
+           nzPlacement="right"
+           [nzFooter]="infoDrawerFooter"
+           (nzOnClose)="infoDrawerClose()">
+  <ng-container *nzDrawerContent>
+    <nz-descriptions nzBordered 
+                     nzSize="small"
+                     [nzColumn]="{ xxl: 1, xl: 1, lg: 1, md: 1, sm: 1, xs: 1 }">
+
+      <nz-descriptions-item nzTitle="姓名" [nzSpan]="2">
+        {{ info?.name }}
+      </nz-descriptions-item>
+      <nz-descriptions-item nzTitle="手机号" [nzSpan]="2">
+        {{ info?.mobile }}
+      </nz-descriptions-item>
+      <nz-descriptions-item nzTitle="预计到达时间" [nzSpan]="2">
+        {{ info?.eta | datetime:'YYYY-MM-DD'}}
+      </nz-descriptions-item>
+      <nz-descriptions-item nzTitle="下单时间" [nzSpan]="2">
+        {{ info?.time | datetime }}
+      </nz-descriptions-item>
+      <nz-descriptions-item nzTitle="预订状态" [nzSpan]="2">
+        {{ info?.status | orderStatus }}
+      </nz-descriptions-item>
+    </nz-descriptions>
+  </ng-container>
+  <ng-template #infoDrawerFooter>
+    <button nz-button nzType="primary" (click)="aeClick(info)">编辑</button>
+    <button nz-button 
+            nzDanger
+            nzType="primary"
+            nz-popconfirm
+            nzPopconfirmOverlayClassName="delete-popover"
+            nzPopconfirmPlacement="bottomRight"
+            nzPopconfirmTitle="确认取消预定吗?"
+            (nzOnConfirm)="fetchRemove(info._id)">
+      取消预定
+    </button>
+  </ng-template>
+</nz-drawer>
+
+<!-- 编辑 -->
+<nz-modal [(nzVisible)]="aeModal.visible" 
+          [nzWidth]="400" 
+          [nzKeyboard]="false" 
+          [nzMaskClosable]="false"
+          [nzTitle]="aeModal.title" 
+          [nzContent]="modalContent" 
+          [nzFooter]="modalFooter" 
+          (nzOnCancel)="aeCancel()">
+    <ng-template #modalContent>
+        <form nz-form [formGroup]="fg">
+            <nz-form-item>
+              <nz-form-label [nzSpan]="7" nzRequired>姓名</nz-form-label>
+              <nz-form-control [nzSpan]="17" nzErrorTip="请输入姓名">
+                <input
+                  nz-input
+                  type="text"
+                  formControlName="name"
+                  placeholder="请输入"
+                />
+              </nz-form-control>
+            </nz-form-item>
+      
+            <nz-form-item>
+              <nz-form-label [nzSpan]="7" nzRequired>手机号</nz-form-label>
+              <nz-form-control [nzSpan]="17" nzErrorTip="请输入手机号">
+                <input
+                  nz-input
+                  type="text"
+                  formControlName="mobile"
+                  placeholder="请输入"
+                />
+              </nz-form-control>
+            </nz-form-item>
+      
+            <nz-form-item>
+              <nz-form-label [nzSpan]="7" nzRequired>预计到店时间</nz-form-label>
+              <nz-form-control [nzSpan]="17" nzErrorTip="请输入到达时间">
+                  <!-- <nz-time-picker formControlName="eta" nzFormat="HH:mm"></nz-time-picker> -->
+                  <nz-date-picker formControlName="eta" ></nz-date-picker>
+              </nz-form-control>
+            </nz-form-item>
+          </form>
+    </ng-template>
+    <ng-template #modalFooter>
+        <button nz-button nzType="default" (click)="aeCancel()">取消</button>
+        <button nz-button nzType="primary" [nzLoading]="aeModal.loading" [disabled]="fg.invalid"
+            (click)="aeOk()">确定</button>
+    </ng-template>
+</nz-modal>

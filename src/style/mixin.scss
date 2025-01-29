@@ -1,0 +1,40 @@
+/**
+ * 自定义滚动条样式
+ * $size 滚动条尺寸
+ * $trackBg 滚动条轨道颜色
+ * $thumbBg 滚动条滑块颜色
+*/
+@mixin scrollbar($size: 6px, $trackBg: #fff, $thumbBg: #d5d5d5) {
+  // 滚动条整体部分
+  &::-webkit-scrollbar{
+    width: $size;
+    height: $size;
+  }
+  // 内层轨道
+  &::-webkit-scrollbar-track-piece {
+    background-color: $trackBg;
+    border-radius: calc($size / 2);
+  }
+  // 滑块
+  &::-webkit-scrollbar-thumb {
+    background-color: $thumbBg;
+    border-radius: calc($size / 2);
+  }
+}
+
+/**
+ * 单行省略号
+ */
+@mixin rowOne {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+// 多行省略号
+@mixin rowAny($row: 2) {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: $row;
+  overflow: hidden;
+}

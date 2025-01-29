@@ -1,0 +1,116 @@
+<nz-layout class="app-layout">
+    <!-- 左侧菜单 -->
+    <nz-sider
+      class="app-sider"
+      nzCollapsible
+      nzWidth="256px"
+      nzBreakpoint="md"
+      [(nzCollapsed)]="isCollapsed"
+      [nzTrigger]="null"
+    >
+      <div class="sidebar-logo">
+        <a>
+          <h1>{{manager.role=='admin'?'管理中心':'个人中心'}}</h1>
+        </a>
+      </div>
+      <ul
+        *ngIf="manager.menu && manager.menu.length"
+        nz-menu
+        nzTheme="dark"
+        nzMode="inline"
+        [nzInlineCollapsed]="isCollapsed"
+      >
+        <ng-container  *ngFor="let m1 of manager.menu">
+          <!-- 有二级菜单 -->
+          <li *ngIf="m1.children && m1.children.length > 0"
+            nz-submenu
+            [(nzOpen)]="m1.open"
+            [nzTitle]="m1.title"
+            [nzIcon]="m1.menuIcon"
+            (click)="goToPath(m1.path,m1.query)"
+          >
+            <ul>
+              <li *ngFor="let m2 of m1.children" nz-menu-item nzMatchRouter>
+                <a [routerLink]="m2.path" [queryParams]="m2.query">
+                  {{ m2.title }}
+                  <span *ngIf="m2.path=='/admin/message/list' && stat.message" class="menu-count">{{ stat.message }}</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <!-- 无二级菜单 -->
+          <li *ngIf="!m1.children || m1.children.length === 0"
+            nz-menu-item
+            nzMatchRouter
+          >
+            <a [routerLink]="m1.path" [queryParams]="m1.query">
+              <i nz-icon [nzType]="m1.menuIcon"></i>
+              <span>{{ m1.title }}</span>
+            </a>
+          </li>
+        </ng-container>
+      </ul>
+    </nz-sider>
+    <nz-layout class="ant-layout">
+      <!-- 右侧头部 -->
+      <nz-header>
+        <div class="app-header">
+          <div class="header-trigger" (click)="isCollapsed = !isCollapsed">
+            <i
+              class="trigger"
+              nz-icon
+              [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
+            ></i>
+          </div>
+          <div class="header-menu">
+            <div
+              class="header-info"
+              nz-popover
+              [(nzPopoverVisible)]="visible"
+              nzPopoverPlacement="bottom"
+              nzPopoverTrigger="click"
+              nzPopoverOverlayClassName="header-info-popover"
+              [nzPopoverContent]="contentTemplate"
+            >
+              <div class="avatar">
+                <img
+                  [src]="
+                    manager?.avatarUrl ||
+                    '../../assets/avatar@2x.png'
+                  "
+                />
+              </div>
+              <div class="name">{{ manager.username }}</div>
+              <i nz-icon [nzType]="visible ? 'up' : 'down'" nzTheme="outline"></i>
+            </div>
+            <ng-template #contentTemplate>
+              <div class="header-popver-list">
+                <div (click)="logout()" class="item">退出登录</div>
+              </div>
+            </ng-template>
+          </div>
+        </div>
+      </nz-header>
+      <!-- 右侧主要内容区 -->
+      <nz-content>
+        <div class="scroll-content" [ngClass]="isDashboard ? 'scroll-content-dashboard' : ''">
+            <!-- [nzStyle]="{height: '60px'}" -->
+          <nz-page-header class="inner-header" [nzTitle]="pageHeader.title" >
+            <nz-page-header-extra *ngIf="pageHeader.requireBack">
+              <button *ngIf="pageHeader?.prevAndNext?.before?.isOpen" nz-button nzType="primary" (click)="goToPath(pageHeader.prevAndNext.before.url,null,'before')">
+                上一个
+              </button>
+              <button *ngIf="pageHeader?.prevAndNext?.after?.isOpen" nz-button nzType="primary" (click)="goToPath(pageHeader.prevAndNext.after.url,null,'after')">
+                下一个
+              </button>
+              <button nz-button nzType="primary" (click)="goBack()">返回</button>
+            </nz-page-header-extra>
+          </nz-page-header>
+          <div class="inner-content">
+            <router-outlet></router-outlet>
+          </div>
+        </div>
+      </nz-content>
+    </nz-layout>
+  </nz-layout>
+  

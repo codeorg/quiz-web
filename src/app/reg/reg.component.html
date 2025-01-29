@@ -1,0 +1,69 @@
+<div class="login-container">
+
+  <div class="login-content">
+    <div class="login-center">
+      <div class="login-wrap">
+        <div class="title">注册</div>
+            <form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="reg()">
+          
+            <nz-form-item>
+              <!-- <nz-form-label [nzSpan]="5" nzFor="userName">用户名</nz-form-label> -->
+              <nz-form-control nzErrorTip="用户类型">
+                <nz-radio-group formControlName="role" nzButtonStyle="solid">
+                  <label nz-radio-button nzValue="user">普通用户</label>
+                  <label nz-radio-button nzValue="admin">员工</label>
+                </nz-radio-group>
+              </nz-form-control>
+            </nz-form-item>
+
+              <nz-form-item>
+                <!-- <nz-form-label [nzSpan]="5" nzFor="userName">用户名</nz-form-label> -->
+                <nz-form-control nzErrorTip="用户名必填!">
+                  <nz-input-group [nzPrefix]="prefixUser">
+                    <input type="text" nz-input nzBorderless formControlName="username" id="username"
+                      placeholder="请输入用户名" />
+                    <ng-template #prefixUser>用户名</ng-template>
+                  </nz-input-group>
+                </nz-form-control>
+              </nz-form-item>
+              <nz-form-item>
+                <!-- <nz-form-label [nzSpan]="5" nzFor="password">密码</nz-form-label> -->
+                <nz-form-control nzErrorTip="密码必填!">
+                  <nz-input-group [nzPrefix]="prefixPsd" [nzSuffix]="suffixPsd">
+                    <input [type]="passwordVisible ? 'text' : 'password'" nz-input nzBorderless
+                      formControlName="password" id="password" placeholder="请输入登录密码" />
+                    <ng-template #prefixPsd>密码</ng-template>
+                    <ng-template #suffixPsd>
+                      <i nz-icon [nzType]="passwordVisible ? 'eye-invisible' : 'eye'"
+                        (click)="passwordVisible = !passwordVisible"></i>
+                    </ng-template>
+                  </nz-input-group>
+                </nz-form-control>
+              </nz-form-item>
+
+              <nz-form-item>
+                <!-- <nz-form-label [nzSpan]="5" nzFor="userName">手机号</nz-form-label> -->
+                <nz-form-control nzErrorTip="手机号">
+                  <nz-input-group [nzPrefix]="prefixMobile">
+                    <input type="text" nz-input nzBorderless formControlName="mobile" id="mobile"
+                      placeholder="请输入手机号" />
+                    <ng-template #prefixMobile>手机号</ng-template>
+                  </nz-input-group>
+                </nz-form-control>
+              </nz-form-item>
+              <button class="submit-btn" nz-button nzBlock [nzType]="'primary'">
+                注册
+              </button>
+            
+            </form>
+            <br/>
+            <a routerLink="/login">
+              登录
+            </a>
+        
+
+  
+      </div>
+    </div>
+  </div>
+</div>

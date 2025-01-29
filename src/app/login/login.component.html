@@ -1,0 +1,50 @@
+<div class="login-container">
+
+  <div class="login-content">
+    <div class="login-center">
+      <div class="login-wrap">
+        <div class="title">欢迎登录</div>
+        <nz-tabset [(nzSelectedIndex)]="selectedIndex">
+          <nz-tab nzTitle="密码登录">
+            <form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="login()">
+              <nz-form-item>
+                <!-- <nz-form-label [nzSpan]="5" nzFor="mobile">手机号</nz-form-label> -->
+                <nz-form-control nzErrorTip="用户名必填!">
+                  <nz-input-group [nzPrefix]="prefixUser">
+                    <input type="text" nz-input nzBorderless formControlName="username" id="username"
+                      placeholder="请输入用户名" />
+                    <ng-template #prefixUser>用户名</ng-template>
+                  </nz-input-group>
+                </nz-form-control>
+              </nz-form-item>
+              <nz-form-item>
+                <!-- <nz-form-label [nzSpan]="5" nzFor="password">密码</nz-form-label> -->
+                <nz-form-control nzErrorTip="密码必填!">
+                  <nz-input-group [nzPrefix]="prefixPsd" [nzSuffix]="suffixPsd">
+                    <input [type]="passwordVisible ? 'text' : 'password'" nz-input nzBorderless
+                      formControlName="password" id="password" placeholder="请输入登录密码" />
+                    <ng-template #prefixPsd>密码</ng-template>
+                    <ng-template #suffixPsd>
+                      <i nz-icon [nzType]="passwordVisible ? 'eye-invisible' : 'eye'"
+                        (click)="passwordVisible = !passwordVisible"></i>
+                    </ng-template>
+                  </nz-input-group>
+                </nz-form-control>
+              </nz-form-item>
+              <button class="submit-btn" nz-button nzBlock [nzType]="'primary'">
+                登录
+              </button>
+            
+            </form>
+            <br/>
+            <a routerLink="/reg"> 
+              注册
+            </a>
+          </nz-tab>
+
+  
+        </nz-tabset>
+      </div>
+    </div>
+  </div>
+</div>
