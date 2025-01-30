@@ -16,7 +16,7 @@ ng serve
 默认本地启动 http://localhost:4200/
 
 ## 公网地址
-```bash
+
 登录页
 http://139.159.227.79:7021/login
 普通用户帐号:test 密码:test
@@ -24,5 +24,6 @@ http://139.159.227.79:7021/login
 
 普通用户/员工注册页面
 http://139.159.227.79:7021/reg
-```
 
+<img src="http://139.159.227.79:7021/images/login.png"/>
+<img src="http://139.159.227.79:7021/images/myorder.png"/>
