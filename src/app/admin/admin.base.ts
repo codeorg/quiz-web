@@ -99,7 +99,12 @@ export abstract class AdminBase implements OnDestroy, OnInit {
 
 
   ngOnDestroy(): void {
-
+    this.subscription.forEach((sub: any) => {
+      if (sub) {
+        // delete this.routerChangeFn[this.router.url];
+        sub.unsubscribe();
+      }
+    });
   }
 }
 

@@ -10,6 +10,7 @@ class Alert {
   }
 
   success(content:any): void {
+    console.log('--alert',content)
     event.emit(EventType.Alert, {level: 'success', content});
   }
 
