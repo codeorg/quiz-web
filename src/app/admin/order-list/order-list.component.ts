@@ -152,7 +152,7 @@ export class OrderListComponent extends AdminBase implements OnInit {
     this.aeModal.loading = true;
 
     if (this.aeModal.type === 0) {
-      this.insert(order);
+      // this.insert(order);
     } else if (this.aeModal.type === 1) {
       this.update(order);
     }
@@ -193,32 +193,10 @@ export class OrderListComponent extends AdminBase implements OnInit {
       });
   }
 
-  insert(seat: any) {
-    let data = {
-      "query": `query Query($mobile: String!, $name: String!, $eta: Float!) {
-        insertOrder(mobile: $mobile, name: $name, eta: $eta)
-      }`,
-      "variables": { eta: seat.eta.getTime(), name: seat.name, mobile: seat.mobile }
-    }
-
-    console.log('data', data)
-
-    this.http
-      .post('/', data)
-      .subscribe((res: any) => {
-        this.aeModal.loading = false;
-        if (res.errors) {
-          return this.alert.error(res.errors[0].message);
-        }
-        this.aeCancel();
-        this.findList();
-        return this.alert.success('预定成功');
-      });
-  }
 
   update(order: any) {
     let data = {
-      "query": `query Query($mobile: String!, $name: String!, $eta: Float!, $orderId: String!) {
+      "query": `mutation UpdateOrder($mobile: String!, $name: String!, $eta: Float!, $orderId: String!) {
         updateOrder(mobile: $mobile, name: $name, eta: $eta, orderId: $orderId)
       }`,
       "variables": { orderId: order._id, eta: order.eta, name: order.name, mobile: order.mobile }
@@ -273,7 +251,7 @@ export class OrderListComponent extends AdminBase implements OnInit {
   approveOrder(orderId: string): void {
     // this.nzMessageService.info('click confirm');
     let data = {
-      "query": `query Query($orderId: String!) {
+      "query": `mutation ApproveOrder($orderId: String!) {
         approveOrder(orderId: $orderId)
       }`,
       "variables": { orderId: orderId }
@@ -296,7 +274,7 @@ export class OrderListComponent extends AdminBase implements OnInit {
   cancelOrder(orderId: string): void {
     // this.nzMessageService.info('click confirm');
     let data = {
-      "query": `query Query($orderId: String!) {
+      "query": `mutation CancelOrder($orderId: String!) {
         cancelOrder(orderId: $orderId)
       }`,
       "variables": { orderId: orderId }

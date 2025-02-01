@@ -59,7 +59,7 @@ export class RegComponent implements OnInit, OnDestroy {
       role: this.validateForm.controls['role'].value,
     }
     let data = {
-      "query": `query Query($role: String!, $password: String!, $mobile: String!, $username: String!) {
+      "query": `mutation Reg($role: String!, $password: String!, $mobile: String!, $username: String!) {
         reg(role: $role, password: $password, mobile: $mobile, username: $username)
       }`,
       "variables": form

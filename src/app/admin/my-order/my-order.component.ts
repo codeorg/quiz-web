@@ -190,7 +190,7 @@ export class MyOrderComponent extends AdminBase implements OnInit {
 
   insert(seat: any) {
     let data = {
-      "query": `query Query($mobile: String!, $name: String!, $eta: Float!) {
+      "query": `mutation InsertOrder($mobile: String!, $name: String!, $eta: Float!) {
         insertOrder(mobile: $mobile, name: $name, eta: $eta)
       }`,
       "variables": { eta: seat.eta.getTime(), name: seat.name, mobile: seat.mobile }
@@ -213,7 +213,7 @@ export class MyOrderComponent extends AdminBase implements OnInit {
 
   update(order: any) {
     let data = {
-      "query": `query Query($mobile: String!, $name: String!, $eta: Float!, $orderId: String!) {
+      "query": `mutation UpdateOrder($mobile: String!, $name: String!, $eta: Float!, $orderId: String!) {
         updateOrder(mobile: $mobile, name: $name, eta: $eta, orderId: $orderId)
       }`,
       "variables": { orderId: order._id, eta: order.eta, name: order.name, mobile: order.mobile }
@@ -270,7 +270,7 @@ export class MyOrderComponent extends AdminBase implements OnInit {
   fetchRemove(orderId: string): void {
     // this.nzMessageService.info('click confirm');
     let data = {
-      "query": `query Query($orderId: String!) {
+      "query": `mutation CancelOrder($orderId: String!) {
         cancelOrder(orderId: $orderId)
       }`,
       "variables": { orderId: orderId }

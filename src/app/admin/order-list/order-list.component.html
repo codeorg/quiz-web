@@ -101,7 +101,7 @@
   </ng-container>
   <ng-template #infoDrawerFooter>
     <button nz-button nzType="primary" (click)="aeClick(info)">编辑</button>
-    <button *ngIf="info.status!=1" nz-button     
+    <button *ngIf="info?.status!=1" nz-button     
     nzType="primary"
     nz-popconfirm
     nzPopconfirmOverlayClassName="delete-popover"
@@ -110,7 +110,7 @@
     (nzOnConfirm)="approveOrder(info._id)">
     预订成功
 </button>
-    <button *ngIf="info.status!=-1" nz-button 
+    <button *ngIf="info?.status!=-1" nz-button 
             nzDanger
             nzType="primary"
             nz-popconfirm
