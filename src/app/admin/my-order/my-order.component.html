@@ -26,6 +26,7 @@
           >
     <thead>
         <tr>
+            <th nzLeft nzWidth="160px">用户名</th>
             <th nzLeft nzWidth="160px">姓名</th>
             <th nzWidth="160px">联系方式</th>
             <th nzWidth="160px">预计到达时间</th>
@@ -36,8 +37,8 @@
     </thead>
     <tbody>
         <tr *ngFor="let data of basicTable.data;let i = index;">
-          <td nzLeft>
-              {{ data.name }}
+          <td nzLeft>{{ data.username }}</td>
+          <td>{{ data.name }}</td>
           <td>{{ data.mobile }}</td>
           <td>{{ data.eta | datetime:'YYYY-MM-DD'}}</td>
           <td>{{ data.status | orderStatus }}</td>
@@ -91,8 +92,8 @@
     </nz-descriptions>
   </ng-container>
   <ng-template #infoDrawerFooter>
-    <button nz-button nzType="primary" (click)="aeClick(info)">编辑</button>
-    <button nz-button 
+    <button *ngIf="info.status!=-1" nz-button nzType="primary" (click)="aeClick(info)">编辑</button>
+    <button *ngIf="info.status!=-1" nz-button 
             nzDanger
             nzType="primary"
             nz-popconfirm
@@ -144,7 +145,7 @@
               <nz-form-label [nzSpan]="7" nzRequired>预计到店时间</nz-form-label>
               <nz-form-control [nzSpan]="17" nzErrorTip="请输入到达时间">
                   <!-- <nz-time-picker formControlName="eta" nzFormat="HH:mm"></nz-time-picker> -->
-                  <nz-date-picker formControlName="eta" ></nz-date-picker>
+                  <nz-date-picker formControlName="eta" [nzDisabledDate]="disabledDate" ></nz-date-picker>
               </nz-form-control>
             </nz-form-item>
           </form>

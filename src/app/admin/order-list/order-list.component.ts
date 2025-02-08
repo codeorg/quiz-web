@@ -72,7 +72,12 @@ export class OrderListComponent extends AdminBase implements OnInit {
     this.findList();
   }
 
+  disabledDate(current: Date): boolean {
+    let today = util.dayTime(new Date(), 0)
+    return current.getTime() < today;
+    // differenceInCalendarDays(current, this.today) > 0;
 
+  }
 
   // 筛选条件的监听
   searchChange(type?: string) {
@@ -147,6 +152,7 @@ export class OrderListComponent extends AdminBase implements OnInit {
 
   // 确定弹窗【新建&编辑】
   aeOk() {
+    if (this.aeModal.loading) return;
     const order = this.fg.getRawValue();
 
     this.aeModal.loading = true;
@@ -167,6 +173,7 @@ export class OrderListComponent extends AdminBase implements OnInit {
           eta
           mobile
           name
+          username
           status
           time
           userId
@@ -199,7 +206,7 @@ export class OrderListComponent extends AdminBase implements OnInit {
       "query": `mutation UpdateOrder($mobile: String!, $name: String!, $eta: Float!, $orderId: String!) {
         updateOrder(mobile: $mobile, name: $name, eta: $eta, orderId: $orderId)
       }`,
-      "variables": { orderId: order._id, eta: order.eta, name: order.name, mobile: order.mobile }
+      "variables": { orderId: order._id, eta: util.dayTime(order.eta, 0), name: order.name, mobile: order.mobile }
     }
 
     console.log('data', data)
@@ -227,6 +234,7 @@ export class OrderListComponent extends AdminBase implements OnInit {
           _id
           eta
           mobile
+          username
           name
           status
           time

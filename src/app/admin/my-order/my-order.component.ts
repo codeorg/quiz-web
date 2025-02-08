@@ -1,4 +1,4 @@
-
+import { util } from 'co-utility';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdminBase } from '../admin.base';
@@ -69,6 +69,13 @@ export class MyOrderComponent extends AdminBase implements OnInit {
 
   override ngOnInit(): void {
     this.findList();
+  }
+
+  disabledDate(current: Date): boolean {
+    let today = util.dayTime(new Date(), 0)
+    return current.getTime() < today;
+    // differenceInCalendarDays(current, this.today) > 0;
+
   }
 
 
@@ -146,6 +153,7 @@ export class MyOrderComponent extends AdminBase implements OnInit {
 
   // 确定弹窗【新建&编辑】
   aeOk() {
+    if (this.aeModal.loading) return;
     const order = this.fg.getRawValue();
 
     this.aeModal.loading = true;
@@ -163,12 +171,13 @@ export class MyOrderComponent extends AdminBase implements OnInit {
       "query": `query FindMyOrders($status: Float) {
         findMyOrders(status: $status) {
           _id
-          eta
-          mobile
-          name
           status
-          time
           userId
+          username
+          name
+          mobile
+          eta
+          time
         }
       }`,
       "variables": { status: this.search.status }
@@ -216,7 +225,7 @@ export class MyOrderComponent extends AdminBase implements OnInit {
       "query": `mutation UpdateOrder($mobile: String!, $name: String!, $eta: Float!, $orderId: String!) {
         updateOrder(mobile: $mobile, name: $name, eta: $eta, orderId: $orderId)
       }`,
-      "variables": { orderId: order._id, eta: order.eta, name: order.name, mobile: order.mobile }
+      "variables": { orderId: order._id, eta: util.dayTime(order.eta, 0), name: order.name, mobile: order.mobile }
     }
 
     console.log('data', data)
@@ -244,6 +253,7 @@ export class MyOrderComponent extends AdminBase implements OnInit {
           _id
           eta
           mobile
+          username
           name
           status
           time
